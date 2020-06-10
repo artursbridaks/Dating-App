@@ -1,0 +1,164 @@
+@extends('layouts.app')
+<title>Dating</title>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="preferences-main">
+                    @if('preferences')
+                        <button type="submit" class="btn btn-primary" id="preferences-button" onclick="preferences()">
+                            Change search
+                            preferences
+                        </button>
+                        <div class="preferences" id="preferences" style="display: none">
+                            <label>Male</label>
+                            <input type="checkbox" name="gender" value="male">
+                            <label>female</label>
+                            <input type="checkbox" name="gender" value="female">
+                        </div>
+                    @endif
+                </div>
+                <div class="header-main">
+{{--                    <strong class="header">Meet new people!</strong>--}}
+                </div>
+                <div class="card">
+                    <div class="card-info">
+                        <br>
+                        @foreach($users as $key => $data)
+{{--                            <img class="rounded mx-auto d-block" id="user-picture" src="{{ $data->getPicture() }}">--}}
+                            <img class="rounded mx-auto d-block" id="user-picture" src="{{ $data->profile_picture }}">
+                            <strong class="user-name">{{$data->name}} {{$data->surname}}, {{$data->age}}</strong>
+                            <strong class="user-location">Lives in {{$data->location}}</strong>
+                        @endforeach
+                        <br><br>
+                        <div>
+                            @if('like')
+{{--                                <button type="submit" class="btn btn-primary" id="dislike">Dislike</button>--}}
+                                {{--                                <button type="submit" class="btn btn-primary" id="like" onclick="like()" >LIKE!--}}
+                                {{--                                </button>--}}
+                                <button type="submit" class="btn btn-primary" id="dislike" onClick="window.location.reload();">Dislike</button>
+                                <button type="submit" class="btn btn-primary" id="like" onClick="window.location.reload();" >LIKE!
+                                </button>
+                                <div id="match" style="display: none">
+                                    It's a match!
+                                </div>
+                            @endif
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+<script>
+    function like() {
+        const x = document.getElementById("match");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function preferences() {
+        let x = document.getElementById("preferences");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
+<style>
+    .preferences-main {
+        position: absolute;
+        top: 60px;
+        left: -230px;
+    }
+
+    .preferences {
+        background-color: #ececec;
+        border: solid black 1px;
+        border-radius: 10px;
+        width: 199px;
+        height: 200px;
+        position: relative;
+        top: 10px;
+    }
+
+    #preferences {
+        /*display: none;*/
+    }
+
+    .header {
+        position: relative;
+        left: 290px;
+        font-size: 20px;
+    }
+
+    /*.header-main {*/
+    /*    background-color: white;*/
+    /*    border: solid #1a95ff 3px;*/
+    /*}*/
+
+    #user-picture {
+        width: 300px;
+        height: auto;
+        border-radius: 20px;
+        border: solid black 2px;
+    }
+
+    .user-name {
+        position: absolute;
+        left: 215px;
+        top: 325px;
+        /*color: #1a95ff;*/
+        font-size: 20px;
+    }
+
+    .user-location {
+        position: absolute;
+        left: 215px;
+        top: 350px;
+        /*color: #1a95ff;*/
+        font-size: 15px;
+    }
+
+    #dislike {
+        position: absolute;
+        top: 380px;
+        left: 290px;
+        background-color: #a00000;
+        border: none;
+    }
+
+    #dislike:hover {
+        background-color: #e50202;
+    }
+
+    #like {
+        position: absolute;
+        top: 380px;
+        left: 360px;
+        background-color: #367800;
+        border: none;
+    }
+
+    #like:hover {
+        background-color: #00a000;
+    }
+
+    #match {
+        position: absolute;
+        top: 420px;
+        left: 300px;
+        font-size: 20px;
+        color: hotpink;
+        /*display: none;*/
+    }
+</style>
